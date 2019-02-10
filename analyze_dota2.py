@@ -17,15 +17,6 @@ import time
 # 79293
 
 
-def classify_longitude(longitude):
-    if (longitude == ""): return 0
-    else: return int(float(longitude) / 20)
-
-def classify_damage(damage):
-    if damage == "Minor": return 1
-    elif damage == "Substantial": return 2
-    elif damage == "Destroyed": return 3
-    else: return 0
 
 def printf_cv(name, scores):
     print("Cross-validating " + name + "... ", end = "")
@@ -36,7 +27,7 @@ def printf_score(name, classifier, input, output, testin, testout):
     classifier.fit(input, output)
     print(classifier.score(testin, testout))
 
-with open("datasets/dota2.csv", "r", encoding="utf8") as file:
+with open("datasets/dota2Test.csv", "r", encoding="utf8") as file:
     reader = csv.reader(file)
     csv_list = list(reader)
     csv_list = csv_list[:] #Ignore first row of data
