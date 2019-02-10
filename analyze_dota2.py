@@ -36,7 +36,7 @@ def printf_score(name, classifier, input, output, testin, testout):
     classifier.fit(input, output)
     print(classifier.score(testin, testout))
 
-with open("datasets/dota2Test.csv", "r", encoding="utf8") as file:
+with open("datasets/dota2.csv", "r", encoding="utf8") as file:
     reader = csv.reader(file)
     csv_list = list(reader)
     csv_list = csv_list[:] #Ignore first row of data
@@ -101,7 +101,7 @@ for n_estimators in range(25):
     classifier.fit(input_list, output_list)
     result += str(classifier.score(input_list, output_list)) + ", "
     result += str(classifier.score(test_input, test_output)) + "\n"
-    print(result)
+    # print(result)
     file.write(result)
 
 # Analyze model complexity curve for AdaBoost tree classifier, find max_depth
@@ -120,7 +120,7 @@ for max_depth in range(100):
     classifier.fit(input_list, output_list)
     result += str(classifier.score(input_list, output_list)) + ", "
     result += str(classifier.score(test_input, test_output)) + "\n"
-    print(result)
+    # print(result)
     file.write(result)
 
 # Analyze model complexity curve for KNN classifier
@@ -139,116 +139,116 @@ for k in range(100):
     classifier.fit(input_list, output_list)
     result += str(classifier.score(input_list, output_list)) + ", "
     result += str(classifier.score(test_input, test_output)) + "\n"
-    print(result)
+    # print(result)
     file.write(result)
 
-# # Neural network ideal number of neurons in a layer
-# scaler = StandardScaler()
-# scaler.fit(input_list)
-# input_list = scaler.transform(input_list)
-# test_input = scaler.transform(test_input)
-#
-# file = open("dota2_neural_network_layer_results.csv", "w")
-# print("Beginning model complexity analysis for NeuralNetwork... neurons")
-# file.write("layers" + ", " + "cross_val_score" + ", " + "training_score" + ", " + "testing_score\n")
-# for neurons in range(100):
-#     layers = [neurons + 1]
-#     classifier = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(layers), random_state=1)
-#     result = ""
-#     result += (str(neurons + 1) + "," + str(cross_val_score(
-#     classifier, input_list, output_list, cv = setCount).mean()) + ", ")
-#     classifier.fit(input_list, output_list)
-#     result += str(classifier.score(input_list, output_list)) + ", "
-#     result += str(classifier.score(test_input, test_output)) + "\n"
-#     print(result)
-#     file.write(result)
-#
-# # Neural network tuple length analysis, or number of layers
-# scaler = StandardScaler()
-# scaler.fit(input_list)
-# input_list = scaler.transform(input_list)
-# test_input = scaler.transform(test_input)
-#
-# file = open("dota2_neural_network_layer_length_results.csv", "w")
-# print("Beginning model complexity analysis for NeuralNetwork... tuple length")
-# file.write("layers" + ", " + "cross_val_score" + ", " + "training_score" + ", " + "testing_score\n")
-# for neurons in range(100):
-#     layers = []
-#     for neuron in range(neurons):
-#         layers.append(45)
-#     classifier = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(layers), random_state=1)
-#     result = ""
-#     result += (str(neurons + 1) + "," + str(cross_val_score(
-#     classifier, input_list, output_list, cv = setCount).mean()) + ", ")
-#     classifier.fit(input_list, output_list)
-#     result += str(classifier.score(input_list, output_list)) + ", "
-#     result += str(classifier.score(test_input, test_output)) + "\n"
-#     print(result)
-#     file.write(result)
-#
-# # SVC kernel analysis; which kernel is ideal
-# SVC = svm.SVC(); # rbf
-# SigmoidSVC = svm.SVC(kernel="sigmoid")
-# LinearSVC = svm.LinearSVC();
-#
-# result = ""
-# result += ("RBF_SVC" + "," + str(cross_val_score(
-# SVC, input_list, output_list, cv = setCount).mean()) + ", ")
-# SVC.fit(input_list, output_list)
-# result += str(SVC.score(input_list, output_list)) + ", "
-# result += str(SVC.score(test_input, test_output)) + "\n"
-# print(result)
-# result = ""
-# result += ("Sigmoid_SVC" + "," + str(cross_val_score(
-# SigmoidSVC, input_list, output_list, cv = setCount).mean()) + ", ")
-# SigmoidSVC.fit(input_list, output_list)
-# result += str(SigmoidSVC.score(input_list, output_list)) + ", "
-# result += str(SigmoidSVC.score(test_input, test_output)) + "\n"
-# print(result)
-# result = ""
-# result += ("Linear_SVC" + "," + str(cross_val_score(
-# LinearSVC, input_list, output_list, cv = setCount).mean()) + ", ")
-# LinearSVC.fit(input_list, output_list)
-# result += str(LinearSVC.score(input_list, output_list)) + ", "
-# result += str(LinearSVC.score(test_input, test_output)) + "\n"
-# print(result)
-#
-# # Gather data for learning curves
-# scaler = StandardScaler()
-#
-# layers = []
-# for i in range(6):
-#     layers.append(45)
-#
-# file = open("dota2_learning_curve_data.csv", "w")
-# print("Beginning learning curve analysis...")
-# file.write("input_size" + ", " + "cv_dt" + ", " + "cv_ab" + ", " + "cv_kn" + ", " + "cv_n" + ", " + "cv_svc" + ", " + "dt" + ", " + "ab" + ", " + "kn" + ", " + "n" + ", " + "svc\n")
-# for input_size in range(1, int(len(input_list) / 100)):
-#     input_partition = input_list[:input_size * 100]
-#     input_nn_partition = input_list[:input_size * 100]
-#     scaler.fit(input_nn_partition)
-#     input_nn_partition = scaler.transform(input_nn_partition)
-#     output_partition = output_list[:input_size * 100]
-#     output = str(input_size * 100) + ", "
-#     DT = tree.DecisionTreeClassifier(max_depth = 8)
-#     AB = AdaBoostClassifier(base_estimator=tree.DecisionTreeClassifier(max_depth=15), n_estimators=50)
-#     KN = KNeighborsClassifier(n_neighbors = 6)
-#     N = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(layers), random_state=1)
-#     SV = svm.SVC(kernel="rbf")
-#     output += str(cross_val_score(DT, input_partition, output_partition, cv = setCount).mean()) + ", "
-#     output += str(cross_val_score(AB, input_partition, output_partition, cv = setCount).mean()) + ", "
-#     output += str(cross_val_score(KN, input_partition, output_partition, cv = setCount).mean()) + ", "
-#     output += str(cross_val_score(N, input_nn_partition, output_partition, cv = setCount).mean()) + ", "
-#     output += str(cross_val_score(SV, input_partition, output_partition, cv = setCount).mean()) + ", "
-#     DT.fit(input_partition, output_partition)
-#     AB.fit(input_partition, output_partition)
-#     KN.fit(input_partition, output_partition)
-#     N.fit(input_nn_partition, output_partition)
-#     SV.fit(input_partition, output_partition)
-#     output += str(DT.score(input_partition, output_partition)) + ", "
-#     output += str(AB.score(input_partition, output_partition)) + ", "
-#     output += str(KN.score(input_partition, output_partition)) + ", "
-#     output += str(N.score(input_nn_partition, output_partition)) + ", "
-#     output += str(SV.score(input_partition, output_partition)) + "\n"
-#     print(output)
-#     file.write(output)
+# Neural network ideal number of neurons in a layer
+scaler = StandardScaler()
+scaler.fit(input_list)
+input_list = scaler.transform(input_list)
+test_input = scaler.transform(test_input)
+
+file = open("dota2_neural_network_layer_results.csv", "w")
+print("Beginning model complexity analysis for NeuralNetwork... neurons")
+file.write("layers" + ", " + "cross_val_score" + ", " + "training_score" + ", " + "testing_score\n")
+for neurons in range(100):
+    layers = [neurons + 1]
+    classifier = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(layers), random_state=1)
+    result = ""
+    result += (str(neurons + 1) + "," + str(cross_val_score(
+    classifier, input_list, output_list, cv = setCount).mean()) + ", ")
+    classifier.fit(input_list, output_list)
+    result += str(classifier.score(input_list, output_list)) + ", "
+    result += str(classifier.score(test_input, test_output)) + "\n"
+    # print(result)
+    file.write(result)
+
+# Neural network tuple length analysis, or number of layers
+scaler = StandardScaler()
+scaler.fit(input_list)
+input_list = scaler.transform(input_list)
+test_input = scaler.transform(test_input)
+
+file = open("dota2_neural_network_layer_length_results.csv", "w")
+print("Beginning model complexity analysis for NeuralNetwork... tuple length")
+file.write("layers" + ", " + "cross_val_score" + ", " + "training_score" + ", " + "testing_score\n")
+for neurons in range(100):
+    layers = []
+    for neuron in range(neurons):
+        layers.append(45)
+    classifier = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(layers), random_state=1)
+    result = ""
+    result += (str(neurons + 1) + "," + str(cross_val_score(
+    classifier, input_list, output_list, cv = setCount).mean()) + ", ")
+    classifier.fit(input_list, output_list)
+    result += str(classifier.score(input_list, output_list)) + ", "
+    result += str(classifier.score(test_input, test_output)) + "\n"
+    # print(result)
+    file.write(result)
+
+# SVC kernel analysis; which kernel is ideal
+SVC = svm.SVC(); # rbf
+SigmoidSVC = svm.SVC(kernel="sigmoid")
+LinearSVC = svm.LinearSVC();
+
+result = ""
+result += ("RBF_SVC" + "," + str(cross_val_score(
+SVC, input_list, output_list, cv = setCount).mean()) + ", ")
+SVC.fit(input_list, output_list)
+result += str(SVC.score(input_list, output_list)) + ", "
+result += str(SVC.score(test_input, test_output)) + "\n"
+print(result)
+result = ""
+result += ("Sigmoid_SVC" + "," + str(cross_val_score(
+SigmoidSVC, input_list, output_list, cv = setCount).mean()) + ", ")
+SigmoidSVC.fit(input_list, output_list)
+result += str(SigmoidSVC.score(input_list, output_list)) + ", "
+result += str(SigmoidSVC.score(test_input, test_output)) + "\n"
+print(result)
+result = ""
+result += ("Linear_SVC" + "," + str(cross_val_score(
+LinearSVC, input_list, output_list, cv = setCount).mean()) + ", ")
+LinearSVC.fit(input_list, output_list)
+result += str(LinearSVC.score(input_list, output_list)) + ", "
+result += str(LinearSVC.score(test_input, test_output)) + "\n"
+print(result)
+
+# Gather data for learning curves
+scaler = StandardScaler()
+
+layers = []
+for i in range(6):
+    layers.append(45)
+
+file = open("dota2_learning_curve_data.csv", "w")
+print("Beginning learning curve analysis...")
+file.write("input_size" + ", " + "cv_dt" + ", " + "cv_ab" + ", " + "cv_kn" + ", " + "cv_n" + ", " + "cv_svc" + ", " + "dt" + ", " + "ab" + ", " + "kn" + ", " + "n" + ", " + "svc\n")
+for input_size in range(1, int(len(input_list) / 100)):
+    input_partition = input_list[:input_size * 100]
+    input_nn_partition = input_list[:input_size * 100]
+    scaler.fit(input_nn_partition)
+    input_nn_partition = scaler.transform(input_nn_partition)
+    output_partition = output_list[:input_size * 100]
+    output = str(input_size * 100) + ", "
+    DT = tree.DecisionTreeClassifier(max_depth = 8)
+    AB = AdaBoostClassifier(base_estimator=tree.DecisionTreeClassifier(max_depth=15), n_estimators=50)
+    KN = KNeighborsClassifier(n_neighbors = 6)
+    N = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(layers), random_state=1)
+    SV = svm.SVC(kernel="rbf")
+    output += str(cross_val_score(DT, input_partition, output_partition, cv = setCount).mean()) + ", "
+    output += str(cross_val_score(AB, input_partition, output_partition, cv = setCount).mean()) + ", "
+    output += str(cross_val_score(KN, input_partition, output_partition, cv = setCount).mean()) + ", "
+    output += str(cross_val_score(N, input_nn_partition, output_partition, cv = setCount).mean()) + ", "
+    output += str(cross_val_score(SV, input_partition, output_partition, cv = setCount).mean()) + ", "
+    DT.fit(input_partition, output_partition)
+    AB.fit(input_partition, output_partition)
+    KN.fit(input_partition, output_partition)
+    N.fit(input_nn_partition, output_partition)
+    SV.fit(input_partition, output_partition)
+    output += str(DT.score(input_partition, output_partition)) + ", "
+    output += str(AB.score(input_partition, output_partition)) + ", "
+    output += str(KN.score(input_partition, output_partition)) + ", "
+    output += str(N.score(input_nn_partition, output_partition)) + ", "
+    output += str(SV.score(input_partition, output_partition)) + "\n"
+    # print(output)
+    file.write(output)
